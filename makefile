@@ -1,16 +1,20 @@
 CC             = gcc
+NVCC           = nvcc
 
 CFLAGS_VECTOR  = -O3 -march=native -mtune=native
 CFLAGS_NORMAL  = -O3 -march=native -mtune=native
 CFLAGS_OMP     = -O3 -march=native -mtune=native -fopenmp
+CFLAGS_NVCC    = -O3 -Wno-deprecated-gpu-targets
 
 SRC_VECTOR     = input/input.c
 SRC_NORMAL     = normal/vector.c normal/header/csv.c
 SRC_OMP        = openmp/vector.c openmp/header/csv.c
+SRC_NVCC       = cuda/vector.cu cuda/header/csv.cu
 
 OUTPUT_VECTOR  = vector_gen
 OUTPUT_NORMAL  = vector
 OUTPUT_OMP     = vector_omp
+OUTPUT_NVCC    = vector_cuda
 
 VECTOR_ONE     = vector1.csv 
 VECTOR_TWO     = vector2.csv
@@ -20,16 +24,21 @@ LOOP_SIZE      = 5000
 
 FILES_TO_CHECK := $(VECTOR_ONE) $(VECTOR_TWO)
 
-all: set_size $(OUTPUT_VECTOR) $(OUTPUT_NORMAL) $(OUTPUT_OMP) create_input
+all: set_size $(OUTPUT_VECTOR) $(OUTPUT_NORMAL) $(OUTPUT_OMP) $(OUTPUT_NVCC) create_input
 
 set_size: 
 	find . -name "*.h" -exec sed -i -E 's/SIZE [0-9]+/SIZE $(VECTOR_SIZE)/g' {} \;
 	find . -name "*.c" -exec sed -i -E 's/SIZE [0-9]+/SIZE $(VECTOR_SIZE)/g' {} \;
-	find -name "*.c" -exec sed -i -E 's/i[ ]*<[ ]*[0-9]+/i<$(LOOP_SIZE)/g' {} \;
+	find . -name "*.cu" -exec sed -i -E 's/SIZE [0-9]+/SIZE $(VECTOR_SIZE)/g' {} \;
 	find -name "*.h" -exec sed -i -E 's/i[ ]*<[ ]*[0-9]+/i<$(LOOP_SIZE)/g' {} \;
+	find -name "*.c" -exec sed -i -E 's/i[ ]*<[ ]*[0-9]+/i<$(LOOP_SIZE)/g' {} \;
+	find -name "*.cu" -exec sed -i -E 's/i[ ]*<[ ]*[0-9]+/i<$(LOOP_SIZE)/g' {} \;
 
 $(OUTPUT_VECTOR): $(SRC_VECTOR)
 	$(CC) $(CFLAGS_VECTOR) -o $(OUTPUT_VECTOR) $(SRC_VECTOR)
+
+$(OUTPUT_NVCC): $(SRC_NVCC)
+	$(NVCC) $(CFLAGS_NVCC) -o $(OUTPUT_NVCC) $(SRC_NVCC)
 
 $(OUTPUT_NORMAL): $(SRC_NORMAL)
 	$(CC) $(CFLAGS_NORMAL) -o $(OUTPUT_NORMAL) $(SRC_NORMAL)
