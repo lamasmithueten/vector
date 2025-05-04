@@ -2,6 +2,7 @@
 #include "header/csv.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <omp.h>
 
 void vectorAddition(int * A, int * B, int * result){
 	for (int i = 0; i < SIZE; i++){
@@ -15,8 +16,8 @@ void vectorSubtraction(int * A, int * B, int * result){
 	}
 }
 
-long dotProduct(int * A, int * B ){
-	long result=0;
+long dotProduct(int * A, int * B){
+	long result =0;
 	for (int i = 0; i < SIZE; i++){
 		result += (long)  (A[i] * B[i]);
 	}
@@ -43,25 +44,29 @@ int main(int argc, char **argv){
 
 	readVectorFromCSV(argv[1], vectorA);
 	readVectorFromCSV(argv[2], vectorB);
-for (int i = 0; i<10000; i++){
+#pragma omp parallel for
+for (int i = 0; i< 10000; i++){
 	vectorAddition(vectorA, vectorB, result);
 	}
-	writeVectorToCSV("result_addition.csv", result);
+	writeVectorToCSV("result_addition_omp.csv", result);
 
-for (int i = 0; i<10000; i++){
+#pragma omp parallel for
+for (int i = 0; i< 10000; i++){
 	vectorSubtraction(vectorA, vectorB, result);
 	}
-	writeVectorToCSV("result_subtraction.csv", result);
+	writeVectorToCSV("result_subtraction_omp.csv", result);
 
-for (int i = 0; i<10000; i++){
-	dotProductResult = dotProduct(vectorA, vectorB );
+#pragma omp parallel for
+for (int i = 0; i< 10000; i++){
+	dotProductResult =dotProduct(vectorA, vectorB);
 	}
-	writeScalarToFile("result_dot_product.txt", &dotProductResult);
+	writeScalarToFile("result_dot_product_omp.txt", &dotProductResult);
 
-for (int i = 0; i<10000; i++){
+#pragma omp parallel for
+for (int i = 0; i< 10000; i++){
 	crossProduct(vectorA, vectorB, result);
 	}
-	writeVectorToCSV("result_cross_product.csv", result);
+	writeVectorToCSV("result_cross_product_omp.csv", result);
 	
 	return EXIT_SUCCESS;
 }
