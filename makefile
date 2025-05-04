@@ -15,15 +15,18 @@ OUTPUT_OMP     = vector_omp
 VECTOR_ONE     = vector1.csv 
 VECTOR_TWO     = vector2.csv
 
-SIZE           = 10000000
+VECTOR_SIZE    = 10000000
+LOOP_SIZE      = 5000
 
 FILES_TO_CHECK := $(VECTOR_ONE) $(VECTOR_TWO)
 
 all: set_size $(OUTPUT_VECTOR) $(OUTPUT_NORMAL) $(OUTPUT_OMP) create_input
 
 set_size: 
-	find . -name "*.h" -exec sed -i -E 's/SIZE [0-9]+/SIZE $(SIZE)/g' {} \;
-	find . -name "*.c" -exec sed -i -E 's/SIZE [0-9]+/SIZE $(SIZE)/g' {} \;
+	find . -name "*.h" -exec sed -i -E 's/SIZE [0-9]+/SIZE $(VECTOR_SIZE)/g' {} \;
+	find . -name "*.c" -exec sed -i -E 's/SIZE [0-9]+/SIZE $(VECTOR_SIZE)/g' {} \;
+	find -name "*.c" -exec sed -i -E 's/i[ ]*<[ ]*[0-9]+/i<$(LOOP_SIZE)/g' {} \;
+	find -name "*.h" -exec sed -i -E 's/i[ ]*<[ ]*[0-9]+/i<$(LOOP_SIZE)/g' {} \;
 
 $(OUTPUT_VECTOR): $(SRC_VECTOR)
 	$(CC) $(CFLAGS_VECTOR) -o $(OUTPUT_VECTOR) $(SRC_VECTOR)
