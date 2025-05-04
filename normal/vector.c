@@ -12,6 +12,7 @@ int main(int argc, char **argv){
 	int * vectorA = (int *) malloc(SIZE * sizeof(int));
 	int * vectorB = (int *) malloc(SIZE * sizeof(int));
 
+
 	readVectorFromCSV(argv[1], vectorA);
 	readVectorFromCSV(argv[2], vectorB);
 

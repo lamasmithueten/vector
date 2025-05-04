@@ -11,7 +11,7 @@ void readVectorFromCSV(const char * filename, int * vector){
 		exit(EXIT_FAILURE);
 	}
 	for (int i = 0; i < SIZE; i++){
-		if (fscanf(file, "%d", &vector[i]) != 1){
+		if (fscanf(file, "%d,", &vector[i]) != 1){
 			fprintf(stderr, "Error reading file\n");
 			fclose(file);
 			exit(EXIT_FAILURE);

@@ -1,0 +1,5 @@
+*.csv
+vector
+vector_omp
+vector_cuda
+vector_gen
