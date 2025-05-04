@@ -17,6 +17,7 @@ void createVector(const char * filename){
 			fprintf(file, ",");
 		}
 	}
+	fprintf(file, "\n");
 
 	fclose(file);
 }
