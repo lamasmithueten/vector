@@ -19,8 +19,8 @@ OUTPUT_NVCC    = vector_cuda
 VECTOR_ONE     = vector1.csv 
 VECTOR_TWO     = vector2.csv
 
-VECTOR_SIZE    = 10000000
-LOOP_SIZE      = 5000
+VECTOR_SIZE    = 256
+LOOP_SIZE      = 1000
 
 FILES_TO_CHECK := $(VECTOR_ONE) $(VECTOR_TWO)
 

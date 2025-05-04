@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define SIZE 10000000
+#define SIZE 256
 
 void createVector(const char * filename){
 	FILE * file = fopen(filename, "w");
