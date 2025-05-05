@@ -2,9 +2,9 @@ CC             = gcc
 NVCC           = nvcc
 
 CFLAGS_VECTOR  = -O3 -march=native -mtune=native
-CFLAGS_NORMAL  = -O3 -march=native -mtune=native
-CFLAGS_OMP     = -O3 -march=native -mtune=native -fopenmp
-CFLAGS_NVCC    = -O3 -Wno-deprecated-gpu-targets
+CFLAGS_NORMAL  = -O3 -march=native -mtune=native -ffast-math -flto
+CFLAGS_OMP     = -O3 -march=native -mtune=native -ffast-math -flto -fopenmp
+CFLAGS_NVCC    = -O3 -Wno-deprecated-gpu-targets -use_fast_math -Xcompiler -march=native
 
 SRC_VECTOR     = input/input.c
 SRC_NORMAL     = normal/vector.c normal/header/csv.c
