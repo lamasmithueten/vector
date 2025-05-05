@@ -1,6 +1,6 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define SIZE 256
+#define SIZE 65536
 
 #endif

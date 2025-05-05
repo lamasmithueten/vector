@@ -19,7 +19,7 @@ OUTPUT_NVCC    = vector_cuda
 VECTOR_ONE     = vector1.csv 
 VECTOR_TWO     = vector2.csv
 
-VECTOR_SIZE    = 256
+VECTOR_SIZE    = 65536
 LOOP_SIZE      = 1000
 
 FILES_TO_CHECK := $(VECTOR_ONE) $(VECTOR_TWO)
@@ -50,3 +50,13 @@ create_input:
 	[[ -f $(VECTOR_ONE) && -f $(VECTOR_TWO) ]] && printf "Files exist\n" || ./$(OUTPUT_VECTOR) $(VECTOR_ONE) $(VECTOR_TWO)
 clean:
 	rm -rf $(OUTPUT_VECTOR) $(OUTPUT_NORMAL) $(OUTPUT_OMP) $(VECTOR_ONE) $(VECTOR_TWO) *.csv *.txt
+
+time:
+	bash -c	"time ./$(OUTPUT_NORMAL) $(VECTOR_ONE) $(VECTOR_TWO) "
+	bash -c "time ./$(OUTPUT_OMP)  $(VECTOR_ONE) $(VECTOR_TWO)"
+	bash -c "time ./$(OUTPUT_NVCC) $(VECTOR_ONE) $(VECTOR_TWO)"
+
+pretty:	
+	find . -name "*.h" -exec clang-format -i {} \;
+	find . -name "*.c" -exec clang-format -i {} \;
+	find . -name "*.cu" -exec clang-format -i {} \;
