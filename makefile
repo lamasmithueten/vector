@@ -20,7 +20,7 @@ VECTOR_ONE     = vector1.csv
 VECTOR_TWO     = vector2.csv
 
 VECTOR_SIZE    = 65536
-LOOP_SIZE      = 1000
+LOOP_SIZE      = 10000000
 
 FILES_TO_CHECK := $(VECTOR_ONE) $(VECTOR_TWO)
 

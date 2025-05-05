@@ -36,17 +36,17 @@ int main(int argc, char **argv) {
 
   readVectorFromCSV(argv[1], vectorA);
   readVectorFromCSV(argv[2], vectorB);
-  for (int i = 0; i<1000; i++) {
+  for (int i = 0; i<10000000; i++) {
     vectorAddition(vectorA, vectorB, result);
   }
   writeVectorToCSV("result_addition.csv", result);
 
-  for (int i = 0; i<1000; i++) {
+  for (int i = 0; i<10000000; i++) {
     vectorSubtraction(vectorA, vectorB, result);
   }
   writeVectorToCSV("result_subtraction.csv", result);
 
-  for (int i = 0; i<1000; i++) {
+  for (int i = 0; i<10000000; i++) {
     dotProductResult = dotProduct(vectorA, vectorB);
   }
   writeScalarToFile("result_dot_product.txt", &dotProductResult);

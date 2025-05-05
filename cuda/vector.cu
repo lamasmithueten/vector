@@ -52,21 +52,21 @@ int main(int argc, char **argv) {
   cudaMemcpy(d_dotProductPartialResult, dotProductPartialResult,
              SIZE * sizeof(long), cudaMemcpyHostToDevice);
 
-  for (int i = 0; i<1000; i++) {
+  for (int i = 0; i<10000000; i++) {
     vectorAddition<<<threadsPerBlock, numBlocks>>>(d_vectorA, d_vectorB,
                                                    d_result);
   }
   cudaMemcpy(result, d_result, SIZE * sizeof(int), cudaMemcpyDeviceToHost);
   writeVectorToCSV("result_addition_cuda.csv", result);
 
-  for (int i = 0; i<1000; i++) {
+  for (int i = 0; i<10000000; i++) {
     vectorSubtraction<<<threadsPerBlock, numBlocks>>>(d_vectorA, d_vectorB,
                                                       d_result);
   }
   cudaMemcpy(result, d_result, SIZE * sizeof(int), cudaMemcpyDeviceToHost);
   writeVectorToCSV("result_subtraction_cuda.csv", result);
 
-  for (int i = 0; i<1000; i++) {
+  for (int i = 0; i<10000000; i++) {
     dotProduct<<<threadsPerBlock, numBlocks>>>(d_vectorA, d_vectorB,
                                                d_dotProductPartialResult);
   }
